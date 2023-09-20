@@ -22,7 +22,7 @@ namespace CQRS.Shop.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "{idCart}")]
+        [HttpGet("{idCart}")]
         public ActionResult Get(Guid idCart)
         {
             var cart = _cartRepository.GetCart(idCart);
@@ -35,8 +35,8 @@ namespace CQRS.Shop.WebApi.Controllers
             return Ok(cart);
         }
 
-        [HttpPut(Name = "")]
-        public ActionResult Create(Guid idCart, int idCustomer)
+        [HttpPut("{idCart}")]
+        public ActionResult Create([FromQuery] Guid idCart, [FromBody] int idCustomer)
         {
             var cartRequest = new CreateCartCommand
             {
@@ -58,7 +58,7 @@ namespace CQRS.Shop.WebApi.Controllers
             return BadRequest();
         }
 
-        [HttpPost(Name = "/item")]
+        [HttpPost("{idCart}/item")]
         public async Task<ActionResult> Create(Guid idCart, CartItem cartItem)
         {
             var addCartItemRequest = new AddCartItemCommand()
