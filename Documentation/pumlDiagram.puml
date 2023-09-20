@@ -1,0 +1,24 @@
+@startuml Basic Sample
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+
+Container(api,"WebApi")
+
+Container(commandHandlers, "Command Handler")
+
+Container(readRepository,"Read Repository")
+Container(writeRepository,"Write Repository")
+
+
+ContainerDb(cacheInMemory,"In memory cache", "Used for demonstration only.")
+
+
+Rel(api, readRepository, "uses")
+Rel(api, commandHandlers, "send command")
+Rel(commandHandlers, writeRepository, "uses")
+
+Rel(writeRepository, cacheInMemory, "writes")
+Rel(readRepository, cacheInMemory, "reads")
+
+@enduml
